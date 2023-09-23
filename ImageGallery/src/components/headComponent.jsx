@@ -7,6 +7,7 @@ const IMG_P_PAGE=20
 
 export default function MainComponent() {
     const [search,setSearch]=useState('')
+    const [keyword,setkeyword]=useState(null)
 
 
    
@@ -14,7 +15,7 @@ export default function MainComponent() {
     const fetchImageData=async()=>{
         try {
             const fetchData=async()=>{
-                const result=await axios.get(`${URL}?query=${search}&page=1&per_page=${IMG_P_PAGE}&client_id=${import.meta.env.VITE_API_KEY}`)
+                const result=await axios.get(`${URL}?query=${search||keyword}&page=1&per_page=${IMG_P_PAGE}&client_id=${import.meta.env.VITE_API_KEY}`)
                 console.log(result.data)
             }
             fetchData()
@@ -28,9 +29,12 @@ const submitHandler=(e)=>{
   fetchImageData()
 }
 
+useEffect(()=>{
+    fetchImageData()
+},[keyword])
+
 const keyWordHandler=(keyword)=>{
-    setSearch(keyword)
-    fetchData()
+    setkeyword(keyword)
 }
 
 
@@ -40,7 +44,7 @@ const keyWordHandler=(keyword)=>{
             <h2 >Search Image</h2>
                 <form className="search-form" onSubmit={submitHandler}>
                     <input value={search}  required className='input-field' type="text" placeholder='for example- Train' onChange={(e)=>setSearch(e.target.value)} />
-                    <button type='submit'>Submit</button>
+                    <button type='submit'>Search</button>
                 </form>
 
            <div className="keywords">
