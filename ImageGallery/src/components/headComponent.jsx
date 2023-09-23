@@ -14,15 +14,23 @@ export default function MainComponent() {
     const [search,setSearch]=useState('')
 
     const [images,setImages]=useState([])
+    const [page,setPage]=useState(1)
+
     const [total_pages,setTotal_pages]=useState(0)
-   
+    const [notFound,setnotFound]=useState('')
+
+    useEffect(()=>{
+        fetchImageData()
+    },[page])
 
     const fetchImageData=async()=>{
         try {
             const fetchData=async()=>{
-                const {data}=await axios.get(`${URL}?query=${search||keyword}&page=1&per_page=${IMG_P_PAGE}&client_id=${import.meta.env.VITE_API_KEY}&width=${d}&height=${d}`)
-                setImages(data.results)
-            }
+                const {data}=await axios.get(`${URL}?query=${search}&page=${page}&per_page=${IMG_P_PAGE}&client_id=${import.meta.env.VITE_API_KEY}&width=${d}&height=${d}`)
+                console.log(data)
+                        setImages(data.results)
+                    setTotal_pages(data.total_pages)                    
+                }
             fetchData()
            } catch (error) {
             console.log('Unabled to fetch Data', error)
@@ -31,7 +39,9 @@ export default function MainComponent() {
 
 const submitHandler=(e)=>{
   e.preventDefault()
+    setPage(1)
   fetchImageData()
+
 }
 
 
@@ -40,14 +50,19 @@ const submitHandler=(e)=>{
     return(
         <>
         <div className="header">
-            <h2 >Search Image</h2>
+            <h2 >Search Images</h2>
                 <form className="search-form" onSubmit={submitHandler}>
                     <input value={search}  required className='input-field' type="text" placeholder='for example- Train' onChange={(e)=>setSearch(e.target.value)} />
                     <button type='submit'>Search</button>
                 </form>
 
-        <Gallery data={images}/>
-        
+                <Gallery data={images}/>
+        <div className="pag_control">
+            {page>1 && <div className="btn" onClick={()=>setPage(page-1)} >Previous Page</div>}
+            {page<total_pages && <div className="btn" onClick={()=>setPage(page+1)}>Next Page Page</div>}
+
+
+        </div>
         </div>
         </>
     )

@@ -2,7 +2,10 @@
 import '../styles/gallery-styles.css'
 
 export default function Gallery({data}) {
+  
     return(
+
+        
         <div className="con">
             {
                 data.map((d)=>(
