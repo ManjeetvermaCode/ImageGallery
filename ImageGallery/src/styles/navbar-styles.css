@@ -1,0 +1,35 @@
+.container{
+    margin: 0;
+    padding: 20px 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    color: #3c096c;
+}
+
+.container p{
+    font-size: 24px;
+}
+.container h3{
+    font-size: 28px;
+    border-bottom: 2px wawy #9d4edd;
+}
+.container a{
+    text-decoration: none;
+    font-size: 24px;
+}
+
+@media (max-width:550px) {
+    .container h3{
+        font-size: 18px;
+        color: orange;
+    }   
+    .container p{
+        font-size: 14px;
+    }
+    .container a{
+        font-size: 14px;
+    }
+}
