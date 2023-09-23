@@ -47,3 +47,18 @@
     font-family: 'Times New Roman', Times, serif;
 
 }
+
+.pag_control{
+    display: flex;
+    flex-direction: row;
+}
+.btn{
+    background-color: #7209b7;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    padding: 5px 6px;
+    border-radius: 3px;
+    margin: 20px 20px;
+
+
+}
