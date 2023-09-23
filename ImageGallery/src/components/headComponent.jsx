@@ -1,22 +1,27 @@
 import { useState,useEffect} from "react"
 import axios from 'axios'
 
-//url's
+//variables
 const URL='https://api.unsplash.com/search/photos'
 const IMG_P_PAGE=20
+const d=200
+
+
+//components
+import Gallery from "./galleryComponent"
 
 export default function MainComponent() {
     const [search,setSearch]=useState('')
-    const [keyword,setkeyword]=useState(null)
 
-
+    const [images,setImages]=useState([])
+    const [total_pages,setTotal_pages]=useState(0)
    
 
     const fetchImageData=async()=>{
         try {
             const fetchData=async()=>{
-                const result=await axios.get(`${URL}?query=${search||keyword}&page=1&per_page=${IMG_P_PAGE}&client_id=${import.meta.env.VITE_API_KEY}`)
-                console.log(result.data)
+                const {data}=await axios.get(`${URL}?query=${search||keyword}&page=1&per_page=${IMG_P_PAGE}&client_id=${import.meta.env.VITE_API_KEY}&width=${d}&height=${d}`)
+                setImages(data.results)
             }
             fetchData()
            } catch (error) {
@@ -29,13 +34,7 @@ const submitHandler=(e)=>{
   fetchImageData()
 }
 
-useEffect(()=>{
-    fetchImageData()
-},[keyword])
 
-const keyWordHandler=(keyword)=>{
-    setkeyword(keyword)
-}
 
 
     return(
@@ -47,13 +46,8 @@ const keyWordHandler=(keyword)=>{
                     <button type='submit'>Search</button>
                 </form>
 
-           <div className="keywords">
-                <div value='House' onClick={()=>keyWordHandler('House')}>House</div>
-                <div onClick={()=>keyWordHandler('Puppies')}>Puppies</div>
-                <div onClick={()=>keyWordHandler('Cute Babies')}>Cute Babies</div>
-                <div onClick={()=>keyWordHandler('Dog')}>Dog</div>
-                <div onClick={()=>keyWordHandler('Coding')}>Coding</div>
-           </div>
+        <Gallery data={images}/>
+        
         </div>
         </>
     )
