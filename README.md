@@ -18,7 +18,7 @@ A ImageGallery Application that takes input from user and fetches the requested 
    VITE_API_KEY=Your UpSplash Key
    ~~~
 
- ## Install Dependencies (After downloading and extracting the repository file or cloning the repository)
+## Install Dependencies (After downloading and extracting the repository file or cloning the repository)
   ```
   cd ImageGallery
   npm install
